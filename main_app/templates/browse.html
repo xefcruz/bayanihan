@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="first-row">
+            <div>
+                <a href="https://lh3.googleusercontent.com/wBqfpUN7KOUVNEg9RwyPwTxHKp8kFeU0vZ4A8i-7fj1AMYbCaK2GAMNsjHSpe2z_90hqBgmsPR4PJ7d5WhFE9epAWn64hP1e8eTjPbOWLtN9Nzbnbg3YueP7NLym6vE2rAZGm3_6luI=s198-p-k?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/wBqfpUN7KOUVNEg9RwyPwTxHKp8kFeU0vZ4A8i-7fj1AMYbCaK2GAMNsjHSpe2z_90hqBgmsPR4PJ7d5WhFE9epAWn64hP1e8eTjPbOWLtN9Nzbnbg3YueP7NLym6vE2rAZGm3_6luI=s198-p-k" class="rounded mx-auto d-block" width="300" height="300" /> </a>
+            </div>
+        </div>
+        <div class="second-row">
+            <h5>Welcome to Bayanihan, {{logged_in_user.first_name}}! </h5>      
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          
+            <div class="collapse navbar-collapse justify-content: space-between" >
+
+              <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                  <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Registry
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/business/new">Post a New Business</a>
+                      <a class="dropdown-item" href="/organization/new">Post a New Organization</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Browse Listings</a>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Forums <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Events and Announcements <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a class="nav-link text-danger" href="/logout">Logout</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                  {% csrf_token %}
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+        </nav>
+    </div>
+    <br>
+    <div class="row justify-content-around">
+        <div class="col-4 border border-dark">
+            <h5>Businesses</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Business Name</td>
+                        <td>City</td>
+                        <td>Posted By</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for business in sorted_business %}
+                        <tr>
+                            <td> <a href="/business/{{business.id}}">{{business.business}}</a></td>
+                            <td>{{business.city}}</td>
+                            <td>{{business.user.user_name}}</td>
+                            <td>
+                                {% if business.user.id == request.session.user_id %}
+                                    <a href="/business/edit/{{business.id}}">Edit  |  </a>
+                                    <a href="/business/delete/{{business.id}}">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4 border border-dark">
+            <h5>Organizations</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Organization Name</td>
+                        <td>City</td>
+                        <td>Posted By</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for organization in sorted_organization %}
+                        <tr>
+                            <td> <a href="/organization/{{organization.id}}">{{organization.organization}}</a></td>
+                            <td>{{organization.city}}</td>
+                            <td>{{organization.user.user_name}}</td>
+                            <td>
+                                {% if organization.user.id == request.session.user_id %}
+                                    <a href="/organization/edit/{{organization.id}}">Edit  |  </a>
+                                    <a href="/organization/delete/{{organization.id}}">Delete</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+</body>
+</html>

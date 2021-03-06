@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container" style="padding: 30px">
+        <h1>Hello {{logged_in_user.first_name}}! Post a New Organization!</h1>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          
+            <div class="collapse navbar-collapse justify-content: space-between" >
+
+              <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item active">
+                  <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Registry
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="/business/new">Post a New Business</a>
+                      <a class="dropdown-item" href="/organization/new">Post a New Organization</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Browse Listings</a>
+                    </div>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Forums <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Events and Announcements <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a class="nav-link text-danger" href="/logout">Logout</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                  {% csrf_token %}
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+        </nav>
+        <form class="form-group" action="/organization/process" method="post">
+            {% csrf_token %}
+            <p>
+                Name of Organization:
+                <input type="text" name="organization" id="">
+            </p>
+            <p>
+                Street Address:
+                <input type="text" name="address" id="">
+            </p>
+            <p>
+                City:
+                <input type="text" name="city" id="">
+            </p>
+            <p>
+                State:
+                <input type="text" name="state" id="">
+            </p>
+            <p>
+                Organization Description:
+                <textarea name="description" id="" cols="30" rows="10"></textarea>
+            </p>
+            <p>
+                Email: 
+                <input type="email" name="email" id="">
+            </p>
+            <p>
+                Telephone:
+                <input type="tel" name="telephone" id="">
+            </p>
+            <p>
+                Website:
+                <input type="url" name="website" id="">
+            </p>
+            
+            <button type="submit">Submit New Organization</button>
+        </form>
+        <a href="/dashboard">
+            <button type="submit">Cancel</button>    
+        </a>
+    </div>
+    {% if messages %}
+    <ul class="messages">    
+        {% for message in messages %}    
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

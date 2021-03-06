@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container" style="padding: 30px">
+        <h1>Hello {{logged_in_user.first_name}}! Read about this Business! </h1>
+        <br>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          
+          <div class="collapse navbar-collapse justify-content: space-between" >
+
+            <ul class="navbar-nav mr-auto">
+
+              <li class="nav-item active">
+                <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Registry
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/business/new">Post a New Business</a>
+                    <a class="dropdown-item" href="/organization/new">Post a New Organization</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Browse Listings</a>
+                  </div>
+              </li>
+
+              <li class="nav-item active">
+                  <a class="nav-link" href="#">Forums <span class="sr-only">(current)</span></a>
+              </li>
+
+              <li class="nav-item active">
+                  <a class="nav-link" href="#">Events and Announcements <span class="sr-only">(current)</span></a>
+              </li>
+              <li>
+                  <a class="nav-link text-danger" href="/logout">Logout</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                {% csrf_token %}
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+      </nav>
+
+        <br>
+
+        <div class="card border-info mb-3" style="max-width: 18rem; padding: 10px;">
+            <h2 class="card-title">{{one_business.business}}</h2>
+            <h4 class="card-subtitle mb-2 text-muted">{{one_business.address}}</h4>
+            <h4 class="card-subtitle mb-2 text-muted">{{one_business.city}}</h4>
+            <h4 class="card-subtitle mb-2 text-muted">{{one_business.state}}</h4>
+
+
+            <p class="card-text">Description: {{one_business.description}}</p>
+
+            <h7 class="card-subtitle mb-2 text-muted">Email: {{one_business.email}}</h7>
+            <h7 class="card-subtitle mb-2 text-muted">Telephone: {{one_business.telephone}}</h7>
+            <br>
+
+            <h8 class="card-subtitle mb-2 text-muted">Posted by {{one_business.user.user_name}} on {{one_business.user.created_at}} </h8>         
+            
+            <h8 class="card-subtitle mb-2 text-muted">Last updated on {{one_business.user.updated_at}} </h8>    
+
+            <h8>{{one_business.website}}</h8>
+
+            <a href="{{one_business.website}}" class="card-link">Click here for Website</a>
+        </div>
+</div>
+</body>
+</html>
